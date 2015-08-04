@@ -12,7 +12,19 @@
     $input_job = new jobOpening($_GET["title"], $_GET["description"], $input_contact);
     $contact1 = new contactInfo("John", "John@aol.com", "503-555-5555");
     $job1 = new jobOpening("Burger flipper", "You flip burgers", $contact1);
-
+    $job_list = array($input_job, $job1);
+    $output = "";
+    foreach($job_list as $job){
+      $output .= "
+       <h3>Job Title:</h3>
+       <p>". $job->getTitle() . "</p>
+       <h3>Job Description:</h3>
+       <p>". $job->getDescription() . "</p>
+       <h3>Posted By:</h3>
+       <p>". $job->getContactInfo()->getName() . "</p>
+       <p>". $job->getContactInfo()->getEmail() . "</p>
+       <p>". $job->getContactInfo()->getPhone() . "</p><br>";
+   }
     return "
     <!DOCTYPE html>
     <html>
@@ -21,9 +33,13 @@
       <title>Job Board!</title>
     </head>
     <body>
-      <div class = 'container'>
-        <h1>Here are the job postings!</h1>
-    "
+    <div class = 'container'>
+     <h1>Here are the job postings!</h1>
+     <br>
+     " . $output . "</div>
+    </body>
+  </html>
+    ";
 
 
     /*return "<p>" . $input_job->getContactInfo()->getName() . "</p>
@@ -32,6 +48,7 @@
     <p>" . $input_job->getTitle() . "</p>
     <p>" . $input_job->getDescription() . "</p>";
 */
+
   });
 
   $app->get("/", function(){
